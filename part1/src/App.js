@@ -19,7 +19,7 @@ function App() {
         <Mensaje />
         <br/>
         {oper1+oper2}
-        <Descripcion color = 'red' message = 'Estamos trabajando'/>
+        <Descripcion color = 'red' back= 'white' message = 'Estamos trabajando'/>
         <Descripcion color = 'yellow' message = 'En un curso de React'/>
         <Descripcion color = 'blue' message = 'de midu dev por youtube'/>
       </div>
