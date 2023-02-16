@@ -1,74 +1,67 @@
-
-import './App.css';
+import './App.css'; 
 import { useState } from 'react';
-import { click } from '@testing-library/user-event/dist/click';
 
+const StatisticRow = ({ label, value }) => {
+  return (
+    <tr>
+      <td>{label}</td>
+      <td>{value}</td>
+    </tr>
+  );
+};
 
+const Statistics = ({ good, neutral, bad }) => {
+  const total = good + neutral + bad;
+  const average = (good - bad) / total || 0;
+  const positivePercentage = (good / total) * 100 || 0;
 
-const Statistics = (props) =>{
-  return <h1>ESTOS SON LOS CLICKS TOTALES: {props.value} 
-  <p>{props.text} {props.value2}</p>
-  
-  </h1>;
-  
+  if (total === 0) {
+    return <p>No feedback given</p>;
+  }
 
-}
-
-const WarningNotUSe = () =>{
-  return <h1>No Feddback Given</h1>;
-}
-
-
+  return (
+    <table>
+      <tbody>
+        <StatisticRow label="Good" value={good} />
+        <StatisticRow label="Neutral" value={neutral} />
+        <StatisticRow label="Bad" value={bad} />
+        <StatisticRow label="Total" value={total} />
+        <StatisticRow label="Average" value={average.toFixed(2)} />
+        <StatisticRow label="Positive Percentage" value={`${positivePercentage.toFixed(2)}%`}
+        />
+      </tbody>
+    </table>
+  );
+};
 
 function App() {
-
   const [counters, setCounters] = useState({
     good: 0,
     neutral: 0,
     bad: 0,
-    counter: 0
-  })
+  });
 
-  const handleCliclckGood = () => {
-    setCounters({
-      ...counters,
-      good: counters.good + 1,
-      counter : counters.counter + 1
-    });
+  const handleCliclck = (type) => {
+    setCounters((prevState) => ({
+      ...prevState,
+      [type]: prevState[type] + 1,
+    }));
   };
 
-  const handleCliclckNeutral = () => {
-    setCounters({
-      ...counters,
-      neutral: counters.neutral + 1,
-      counter : counters.counter + 1
-
-    });
-  };
-
-  const handleCliclckBad = () => {
-    setCounters({
-      ...counters,
-      bad: counters.bad + 1,
-      counter : counters.counter + 1
-
-    });
-  };
   return (
-      <div className="App">
-        <h1>Give FeedBack</h1>
-        <button onClick={handleCliclckGood}>good</button>
-        <button onClick={handleCliclckNeutral}>neutral</button>
-        <button onClick={handleCliclckBad}>bad</button>
-        <h1>Statistics</h1>
-        <p>Good: {counters.good} </p>
-        <p>Neutral: {counters.neutral} </p>
-        <p>Bad: {counters.bad}</p>
-        {counters.counter === 0 ? <WarningNotUSe/> : <Statistics value={ counters.counter} 
-        text= "Good: " 
-        value2 = {counters.good}/>}
-      </div>
-    );
+    <div className="App">
+      <h1>Give Feedback</h1>
+      <button onClick={() => handleCliclck('good')}>Good</button>
+      <button onClick={() => handleCliclck('neutral')}>Neutral</button>
+      <button onClick={() => handleCliclck('bad')}>Bad</button>
+      <h1>Statistics</h1>
+      <Statistics
+        good={counters.good}
+        neutral={counters.neutral}
+        bad={counters.bad}
+      />
+    </div>
+  );
 }
 
 export default App;
