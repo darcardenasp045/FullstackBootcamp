@@ -5,17 +5,9 @@ import App from "./App";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
-const names = [
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-];
 
 root.render(
   <StrictMode>
-    <App personsNames={names} />
+    <App/>
   </StrictMode>
 );
