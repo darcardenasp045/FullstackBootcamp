@@ -1,0 +1,18 @@
+POST  http://localhost:3001/api/notes
+content-type: application/json 
+
+{   
+    "name": "lorena",
+    "apellido": "Castellanos",
+    "cc": 1023568996,
+    "content": "hola4"
+}
+
+###
+
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    
+}
