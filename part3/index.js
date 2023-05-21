@@ -1,41 +1,32 @@
 const express = require('express')
-const app = express()
+const cors = require('cors')
 
+const app = express()
+app.use(cors())
 app.use(express.json())
 
 let notes = [
   {
     id: 1,
-    name: 'Daniel',
-    APellido: 'cardenas',
-    CC: 102325232222564,
-    content: 'hola1'
+    content: 'hola1',
+    date: '2019-05-30T19:20:14.298Z',
+    impotant: true
   },
 
   {
     id: 2,
-    name: 'Andres',
-    APellido: 'cardenas',
-    CC: 1023255542564,
-    content: 'hola2'
+    content: 'hola2',
+    date: '2019-05-30T19:20:14.098Z',
+    impotant: true
   },
 
   {
     id: 3,
-    name: 'Nelson',
-    APellido: 'cardenas',
-    CC: 102325211564,
-    content: 'hola3'
+    content: 'hola3',
+    date: '2019-05-30T19:20:14.091Z',
+    impotant: false
   }
 ]
-
-// const http = require ('http') // esto es lo mismo de import http from 'http'
-// const { request } = require('https')
-
-// const app = http.createServer((request, Response) =>{
-//     Response.writeHead(200,{'content-type':'application/json'})
-//     Response.end(JSON.stringify(notes))
-// } )
 
 app.get('/', (request, response) => {
   response.send('<h1>Hello World</h1>')
