@@ -55,11 +55,6 @@ app.delete('/api/notes/:id', (request, response) => {
   response.status(204).end()
 })
 
-const PORT = 3001
-app.listen(PORT, () => {
-  console.log(`Server is runnig on port ${PORT}`)
-})
-
 app.post('/api/notes', (request, response) => {
   const note = request.body
 
@@ -72,12 +67,16 @@ app.post('/api/notes', (request, response) => {
   const maxId = Math.max(...ids)
   const newNote = {
     id: maxId + 1,
-    name: note.name,
-    Apellido: note.apellido,
-    CC: note.CC,
-    content: note.content
+    content: note.content,
+    important: typeof note.important !== 'undefined' ? note.important : false,
+    date: new Date().toISOString()
 
   }
   notes = [...notes, newNote]
   response.json(newNote)
+})
+
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+  console.log(`Server is runnig on port ${PORT}`)
 })

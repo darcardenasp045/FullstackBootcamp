@@ -20,5 +20,13 @@
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/eslintrc.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darcardenasp045/fullStackBootCamp"
+  },
+  "keywords": [],
+  "engines": {
+    "node": ">=14"
   }
 }
