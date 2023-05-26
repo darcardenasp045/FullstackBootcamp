@@ -1,39 +1,24 @@
+require('dotenv').config()
+require('./mongo')
+
 const express = require('express')
 const cors = require('cors')
+const Note = require('./models/Note')
 
 const app = express()
 app.use(cors())
 app.use(express.json())
 
-let notes = [
-  {
-    id: 1,
-    content: 'hola1',
-    date: '2019-05-30T19:20:14.298Z',
-    impotant: true
-  },
-
-  {
-    id: 2,
-    content: 'hola2',
-    date: '2019-05-30T19:20:14.098Z',
-    impotant: true
-  },
-
-  {
-    id: 3,
-    content: 'hola3',
-    date: '2019-05-30T19:20:14.091Z',
-    impotant: false
-  }
-]
+let notes = []
 
 app.get('/', (request, response) => {
   response.send('<h1>Hello World</h1>')
 })
 
 app.get('/api/notes', (request, response) => { // esta es la ruta donde se va a mostrar la informacion
-  response.send(notes)
+  Note.find({}).then(notes => {
+    response.json(notes)
+  })
 })
 
 app.get('/api/notes/:id', (request, response) => { // esta es la ruta donde se va a mostrar la informacion
@@ -63,20 +48,18 @@ app.post('/api/notes', (request, response) => {
       error: 'No se pudo crear la nota'
     })
   }
-  const ids = notes.map(note => note.id)
-  const maxId = Math.max(...ids)
-  const newNote = {
-    id: maxId + 1,
+  const newNote = new Note({
     content: note.content,
-    important: typeof note.important !== 'undefined' ? note.important : false,
-    date: new Date().toISOString()
+    important: note.important || false,
+    date: new Date()
 
-  }
-  notes = [...notes, newNote]
-  response.json(newNote)
+  })
+  newNote.save().then(savedNote => {
+    response.json(savedNote)
+  })
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server is runnig on port ${PORT}`)
 })
